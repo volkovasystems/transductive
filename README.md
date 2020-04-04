@@ -1,0 +1,2 @@
+# transductive
+Streamlining reducible procedure.
