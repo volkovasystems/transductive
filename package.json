@@ -1,0 +1,27 @@
+{
+  "name": "transductive",
+  "version": "0.0.0",
+  "description": "Streamlining reducible procedure.",
+  "main": "transductive.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volkovasystems/transductive.git"
+  },
+  "keywords": [
+    "transductive",
+    "reductive",
+    "transduce",
+    "transducer",
+    "reduce",
+    "reducer"
+  ],
+  "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/volkovasystems/transductive/issues"
+  },
+  "homepage": "https://github.com/volkovasystems/transductive#readme"
+}
