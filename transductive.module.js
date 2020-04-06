@@ -33,6 +33,39 @@ const INTEGER_PATTERN = (
 
 const Transductive = (
 	function Transductive( entity ){
+		/*;
+			@parameter-definition:
+				{
+					"namespace": "[
+						@type:
+								object
+							|	object as Array
+							|	function
+							|	string
+							|	number
+							|	boolean
+							|	undefined
+
+							<
+								@required
+							>
+					]"
+				}
+			@end-parameter-definition
+
+			@result-definition:
+				{
+					"result": "[@type: object as Transductive]"
+				}
+			@end-result-definition
+
+			@trigger-definition:
+				{
+					"trigger": "[@type: object as Error <@throwable>]"
+				}
+			@end-trigger-definition
+		*/
+
 		if(
 				(
 								this
@@ -404,7 +437,7 @@ const Transductive = (
 					return  (
 								new Transductive(
 										entity
-									);
+									)
 							);
 				}
 			}
