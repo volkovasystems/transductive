@@ -589,7 +589,39 @@ Transductive.prototype.next = (
 
 Transductive.prototype.$flush = (
 	function flush( ){
+		const $indexList = (
+			this
+			.$indexList
+			.get(
+				this
+			)
+		);
 
+		while(
+				$indexList
+				.length
+			>	0
+		){
+			$indexList
+			.pop( );
+		}
+
+		const $keyList = (
+			this
+			.$keyList
+			.get(
+				this
+			)
+		);
+
+		while(
+				$keyList
+				.length
+			>	0
+		){
+			$keyList
+			.pop( );
+		}
 
 		return  this;
 	}
