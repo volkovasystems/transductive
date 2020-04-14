@@ -283,13 +283,6 @@ const Transductive = (
 					);
 				}
 				else if(
-						typeof
-						entity
-					==  "undefined"
-				){
-
-				}
-				else if(
 						(
 								typeof
 								entity
@@ -312,6 +305,12 @@ const Transductive = (
 								typeof
 								entity
 							==	"symbol"
+						)
+
+					&&	(
+								typeof
+								entity
+							==  "undefined"
 						)
 				){
 					Object
@@ -366,7 +365,28 @@ const Transductive = (
 						==  "undefined"
 					)
 			){
+				Object
+				.defineProperty(
+					this,
 
+					"$entity",
+
+					{
+						"value": (
+							(
+								new	WeakMap( )
+							)
+							.set(
+								this,
+								entity
+							)
+						),
+
+						"configurable": false,
+						"enumerable": false,
+						"writable": false
+					}
+				);
 			}
 			else{
 				throw   (
@@ -629,6 +649,13 @@ Transductive.prototype.$flush = (
 
 Transductive.prototype.reduce = (
 	function reduce( reducer, accumulator ){
+		const parameterList = (
+			Array
+			.from(
+				arguments
+			)
+		);
+
 		if(
 				typeof
 				reducer
@@ -648,7 +675,7 @@ Transductive.prototype.reduce = (
 
 		if(
 				(
-						arguments
+						parameterList
 						.length
 					=== 1
 				)
@@ -686,21 +713,13 @@ Transductive.prototype.reduce = (
 					);
 			}
 			else{
-				throw   (
-							new Error(
-									[
-										"cannot proceed reduce procedure",
-										"cannot determine accumulator",
-
-										`@arguments: ${ arguments };`
-									]
-								)
-						);
+					accumulator
+				=	undefined;
 			}
 		}
 		else if(
 				(
-						arguments
+						parameterList
 						.length
 					!== 2
 				)
@@ -711,16 +730,8 @@ Transductive.prototype.reduce = (
 					==  "undefined"
 				)
 		){
-			throw   (
-						new Error(
-								[
-									"cannot proceed reduce procedure",
-									"invalid reduce parameter list",
-
-									`@arguments: ${ arguments };`
-								]
-							)
-					);
+				accumulator
+			=	undefined;
 		}
 
 		const $entity = (
@@ -768,23 +779,107 @@ Transductive.prototype.reduce = (
 						)
 					);
 			}
+
+			Object
+			.defineProperty(
+				this,
+
+				"$accumulator",
+
+				{
+					"value": (
+						(
+							new	WeakMap( )
+						)
+						.set(
+							this,
+							accumulator
+						)
+					),
+
+					"configurable": false,
+					"enumerable": false,
+					"writable": false
+				}
+			);
 		}
 		catch(
 			error
 		){
+			throw   (
+						new Error(
+								[
+									"cannot proceed reduce procedure",
+									"cannot proceed execute reducer",
 
+									`@error-data: ${ error };`
+								]
+							)
+					);
 		}
 
-		return  this;
+		return  (
+					new	Transductive(
+							accumulator
+						)
+				);
 	}
 );
 
 Transductive.prototype.valueOf = (
 	function valueOf( ){
+		return	(
+						(
+								(
+												this
+												.$accumulator
+									instanceof	WeakMap
+								)
+							===	true
+						)
+					?	(
+							this
+							.$accumulator
+							.get(
+								this
+							)
+						)
+					:	(
+							this
+							.$entity
+							.get(
+								this
+							)
+						)
+				);
 	}
 );
 
 Transductive.prototype.toString = (
 	function toString( ){
+		return	(
+					JSON
+					.stringify(
+						{
+							"entity": (
+								this
+								.$entity
+								.get(
+									this
+								)
+							),
+
+							"accumulator": (
+								this
+								.$accumulator
+								.get(
+									this
+								)
+							)
+						}
+					)
+				);
 	}
 );
+
+module.exports = Transductive;
